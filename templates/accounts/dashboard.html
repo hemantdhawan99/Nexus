@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %} | Dashboard {% endblock %}
+
+{% block content %}
+
+<section id="showcase-inner" class="py-5 text-white">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h1 class="display-4">User Dashboard</h1>
+        <p class="lead">Manage your Nexus Landholdings account</p>
+      </div>
+    </div>
+  </div>
+</section>
+<br>
+{% include 'partials/_alerts.html' %}
+<!-- Breadcrumb -->
+<section id="bc" class="mt-3">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'index' %}">
+            <i class="fas fa-home"></i> Home</a>
+        </li>
+        <li class="breadcrumb-item active"> Dashboard</li>
+      </ol>
+    </nav>
+  </div>
+</section>
+
+
+
+<section id="dashboard" class="py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Welcome {{ user.first_name }}</h2>
+        {% if contacts %}
+          
+        <p>Here are the property listings that you have inquired about.</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Inquiry ID</th>
+              <th scope="col">Property</th>
+              <th scope="col">View listings</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for contacts in contacts %}
+            <tr>
+              <td>{{ contacts.id }}</td>
+              <td>{{ contacts.listing }}</td>
+              <td>
+                <a class="btn btn-light" href="{% url 'listing' contacts.listing_id %}">View Listing</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p>You have not made any inquery.</p>
+
+        {% endif %}
+      </div>
+
+      <div class="col-md-12">
+        {% if listings %}
+        <p>Here are the property listings that you have added.</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Listing ID</th>
+              <th scope="col">Property</th>
+              <th scope="col">View Listings</th>
+              <th scope="col">Edit/Delete</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for listing in listings %}
+            <tr>
+              <td>{{ listing.id }}</td>
+              <td>{{ listing.address }}</td>
+              <td>
+                <a class="btn btn-light" href="{% url 'listing' listing.id %}">View Listing</a>
+              </td>
+              <td>
+                <a class="btn btn-outline-danger" href="{% url 'delete' listing.id %}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <!-- <button type="button" class="btn btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i></button> -->
+              </td>
+              <!-- <td>
+                <p>Contact admin on the email provided on the website
+                  for editing or removal of the listing.</p>
+              </td> -->
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p>You have not listed any property.</p>
+
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock %}

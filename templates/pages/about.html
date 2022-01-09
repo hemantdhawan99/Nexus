@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+{% block title %} | About {% endblock %}
+
+
+{% block content %}
+<!-- Breadcrumb -->
+<section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'index' %}">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active"> About</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <section id="about" class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h2>We Search For The Perfect Home</h2>
+          <p class="lead">Best user experience & 24/7 Tech Support.</p>
+          <img src="{% static 'img/about.jpg' %}" alt="">
+          <p class="mt-4">Nexus Landholdings is an online forum where buyers, sellers and brokers/agents can exchange information about real estate 
+            properties quickly, effectively and inexpensively. Through our services, we provide end to end assistance in property buying - right from property search to purchase.
+             We have experienced property advisors who will guide you through the property buying journey and ensure you make the 
+             right choice with minimum stress.</p>
+        </div>
+        <div class="col-md-4">
+          {% if mvp_realtors %}
+            {% for realtor in mvp_realtors %}
+
+            <div class="card">
+              {% if realtor.photo != 'False' %}
+              <img class="card-img-top" src="{{ realtor.photo.url }}" alt="Seller of the month">
+              {% else %}
+              <img class="card-img-top" src="{% static 'img/profile.png' %}" alt="Seller of the month">
+              {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">Seller Of The Month</h5>
+                <h6 class="text-secondary">{{ realtor.name }}</h6>
+                <p class="card-text">{{ realtor.description }}
+                </p>
+                <p>
+                  <i class="fas fa-envelope-open"></i> <a href="mailto:{{ realtor.email }}" target="_blank">{{ realtor.email }}</a></p>
+              </div>
+            </div>
+
+            {% endfor %}
+          {% endif %}
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section id="work" class="bg-dark text-white text-center">
+    <h2 class="display-4">Price Prediction</h2>
+    <h4>A powerful tool which will help in predicting the price of your desired property.</h4>
+    <hr>
+    <a href="{% url 'predict' %}" class="btn btn-secondary text-white btn-lg">Predict Price</a>
+  </section>
+
+  <!-- Team -->
+  <section id="team" class="py-5">
+    <div class="container">
+      <h2 class="text-center">Realtors</h2>
+      <br>
+      <div class="row text-center">
+        {% if realtors %}
+            {% for realtor in realtors %}
+          <div class="col-md-4">
+              {% if realtor.photo != 'False' %}
+              <img src="{{ realtor.photo.url }}" alt="" class="rounded-circle mb-3">
+              {% else %}
+              <img src="{% static 'img/profile.png' %}" alt="" class="rounded-circle mb-3">
+              {% endif %}
+              <h4>{{ realtor.name }}</h4>
+              <p class="text-success">
+                <i class="fas fa-award text-success mb-3"></i> Realtor</p>
+              <hr>
+              <p>
+                <i class="fas fa-phone"></i> <a href="tel:{{ realtor.phone }}" target="_blank">  {{ realtor.phone }}</a></p>
+              <p>
+                <i class="fas fa-envelope-open"></i> <a href="mailto:{{ realtor.email }}" target="_blank">{{ realtor.email }}</a></p>
+            </div>
+           
+          {% endfor %}
+        {% else %}
+          <div class="col-md-12">
+            <p>No Realtors Available</p>
+          </div>
+        {% endif %}       
+      </div>
+    </div>
+  </section>
+{%endblock%}
