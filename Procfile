@@ -1,0 +1,1 @@
+web: gunicorn nex.wsgi --log-file -
