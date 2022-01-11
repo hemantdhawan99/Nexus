@@ -27,7 +27,7 @@
                 <div class="col-md-4 mb-3">
                   <label class="sr-only">City</label>
                   <select name="state" class="form-control">
-                    <option selected="true" disabled="disabled">Select State</option>
+                    <option selected="true" disabled="disabled">City</option>
                     {%for key,value in state_choices.items %}
                      <option value="{{key}}">{{value}}</option>
                     {%endfor%}
@@ -38,7 +38,7 @@
                   <label class="sr-only">Location</label>
                   <!-- <input type="text" name="city" class="form-control" placeholder="City"> -->
                  <select name="city" class="form-control">
-                    <option selected="true" disabled="disabled">Select city</option>
+                    <option selected="true" disabled="disabled">Location</option>
                     {%for value in locations %}
                      <option value="{{value}}">{{value}}</option>
                     {%endfor%}
@@ -68,7 +68,7 @@
                   </select>
                 </div>
               </div>
-              <button class="btn btn-secondary btn-block mt-4" type="submit">Submit form</button>
+              <button class="btn btn-secondary btn-block mt-4" type="submit">Search</button>
             </form>
           </div>
         </div>
