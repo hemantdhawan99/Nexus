@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
+from contacts.models import Contact
 from realtors.models import Realtor as Realtor1
 
 from listings.choices import state_choices, locations,rera
@@ -49,7 +50,14 @@ def listing_sub(request):
                 
             listing1.save()
             messages.success(request, 'Listing has been added successfully!')
-            return render(request,'accounts/dashboard.html')
+            user_contacts = Contact.objects.order_by('-contact_date').filter(user_id = request.user.id)
+            listings = Listing.objects.order_by("-list_date").filter(user_id = request.user.id)
+            #listing_con = Listing.objects.all().filter(address = F('contact__id'))
+            context = {
+                'contacts': user_contacts,
+                'listings':listings,
+            }
+            return render(request, 'accounts/dashboard.html', context)
     # except:
     #     messages.error(request, 'Something went wrong!')
     #     return render(request,'addlisting/addlisting.html')
